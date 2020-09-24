@@ -3,6 +3,7 @@ namespace app\index\controller;     // 该文件的位于application\index\contr
 use think\Request;                  // 引用Request
 use app\common\model\Student;       // 學生模型
 use app\common\model\Teacher;       // 教师
+use app\common\model\Klass;         // 班級模型
 
 /**
  * 教师管理，继承think\Controller后，就可以利用V层对数据进行打包了。
@@ -193,17 +194,17 @@ class StudentController extends IndexController
             }
             
             // 在Klass表模型中获取当前记录
-            if (null === $Klass = Klass::get($id))
+            if (null === $Student = Student::get($id))
             {
                 // 由于在$this->error抛出了异常，所以也可以省略return(不推荐)
                 $this->error('系统未找到ID为' . $id . '的记录');
             } 
             
             // 将数据传给V层
-            $this->assign('Klass', $Klass);
-            // 获取所有的教师信息
-            $teachers = Teacher::all();
-            $this->assign('teachers', $teachers);
+            $this->assign('Student', $Student);
+            // 取出班级列表
+            //$klasses = Klass::all();
+            //$this->assign('klasses', $klasses);
             // 获取封装好的V层内容
             $htmls = $this->fetch();
 
@@ -233,16 +234,19 @@ class StudentController extends IndexController
             $id = Request::instance()->post('id/d');
 
             // 获取当前对象
-            $Klass = Klass::get($id);
+            $Student = Student::get($id);
 
-            if (!is_null($Klass)) {
+            if (!is_null($Student)) {
                 // 写入要更新的数据
-                $Klass->name = input('post.name');
-                $Klass->teacher_id = input('post.teacher_id');
+                $Student->name = input('post.name');
+                $Student->num = input('post.num');
+                $Student->sex = input('post.sex');
+                $Student->klass_id = input('post.klass_id');
+                $Student->email = input('post.email');
 
                 // 更新
-                if (false === $Klass->validate(true)->save()) {
-                    return $this->error('更新失败' . $Klass->getError());
+                if (false === $Student->validate(true)->save()) {
+                    return $this->error('更新失败' . $Student->getError());
                 }
             } else {
                 throw new \Exception("所更新的记录不存在", 1);   // 调用PHP内置类时，需要在前面加上 \ 
