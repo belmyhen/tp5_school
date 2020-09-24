@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh-hans">
+
+<head>
+    <meta charset="UTF-8">
+    <title>编辑数据</title>
+</head>
+
+<body class="contanier">
+    <div class="row">
+        <div class="col-md-12">
+            <form action="{:url('update')}" method="post">
+                <label>姓名:</label>
+                <input type="hidden" name="id" value="{$Klass->getData('id')}" />
+                <input type="text" name="name" value="{$Klass->getData('name')}" />
+                <label>辅导员:</label>
+                <select name="teacher_id" id="teacher">
+            {volist name="teachers" id="_Teacher"}
+            <option value="{$_Teacher->getData('id')}" {eq name="$_Teacher->getData('id')" value="$Klass->getData('teacher_id')"} selected="selected"{/eq}>{$_Teacher->getData('name')}</option>
+            {/volist}
+        </select>
+                <button type="submit">保存</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
