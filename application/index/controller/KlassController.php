@@ -1,8 +1,9 @@
 <?php
 namespace app\index\controller;     // 该文件的位于application\index\controller文件夹
 use think\Request;                  // 引用Request
-use app\common\model\Klass;         // 班级模型
+use app\common\model\Student;       // 學生模型
 use app\common\model\Teacher;       // 教师
+use app\common\model\Klass;         // 班級模型
 
 /**
  * 教师管理，继承think\Controller后，就可以利用V层对数据进行打包了。
